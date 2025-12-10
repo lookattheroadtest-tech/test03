@@ -1,7 +1,7 @@
 curl -X POST https://demo.testfire.net/api/admin/addUser \
   -H "Authorization: YW5OdGFYUm86WkdWdGJ6RXlNelE9OkU/Pz8/XA==" \
   -H "Content-Type: application/json" \
-  -d '{"firstname":"Bilbo","lastname":"Baggins","username":"bilbob","password1":"P@ssw0rd","password2":"P@ssw0rd"}'
+  -d '{"firstname":"Bilbo","lastname":"Baggins","username":"bilbob","password1":"Test123!","password2":"Test123!"}'
 
 curl -X GET https://demo.testfire.net/api/account \
   -H "Authorization: YW5OdGFYUm86WkdWdGJ6RXlNelE9OkU/Pz8/XA==" \
