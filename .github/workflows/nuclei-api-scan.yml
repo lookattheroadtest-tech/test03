@@ -9,8 +9,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Clean old files causing unzip issues
+        run: |
+          rm -rf nuclei
+          rm -f LICENSE.md README.md README_*.md
 
       - name: Install Nuclei
         run: |
@@ -19,7 +24,7 @@ jobs:
             | grep linux_amd64.zip \
             | cut -d '"' -f 4 \
             | wget -qi -
-          unzip -o *.zip       # <-- FIXED (overwrite, no prompts)
+          unzip -o *.zip         # overwrite without asking
           sudo mv nuclei /usr/local/bin/
 
       - name: Run Authenticated API Scan (Hardcoded)
