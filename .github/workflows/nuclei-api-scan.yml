@@ -1,0 +1,38 @@
+name: Nuclei Authenticated API Scan
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nuclei
+        run: |
+          curl -s https://api.github.com/repos/projectdiscovery/nuclei/releases/latest \
+            | grep browser_download_url \
+            | grep linux_amd64.zip \
+            | cut -d '"' -f 4 \
+            | wget -qi -
+          unzip *.zip
+          sudo mv nuclei /usr/local/bin/
+
+      - name: Run Authenticated API Scan (Hardcoded)
+        run: |
+          mkdir -p outputs
+          while read -r req; do
+            nuclei -t nuclei/api-auth.yaml \
+              -var "request=$req" \
+              -silent >> outputs/report.txt
+          done < nuclei/api-endpoints.txt
+
+      - name: Upload Nuclei Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuclei-api-report
+          path: outputs/report.txt
