@@ -1,0 +1,20 @@
+id: authenticated-api-scan
+info:
+  name: Authenticated API Scan
+  severity: info
+
+self-contained: true
+
+http:
+  - raw:
+      - |
+        {{request}}
+    matchers:
+      - type: status
+        status:
+          - 200
+          - 201
+          - 400
+          - 401
+          - 403
+          - 500
